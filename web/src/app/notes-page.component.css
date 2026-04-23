@@ -1,0 +1,168 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  color: #183223;
+}
+
+.shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) 1fr;
+  background:
+    radial-gradient(circle at top left, rgba(224, 199, 122, 0.36), transparent 28%),
+    linear-gradient(135deg, #f2ebdb 0%, #efe7d5 42%, #dfe7d6 100%);
+}
+
+.sidebar,
+.editor {
+  padding: 1.5rem;
+}
+
+.sidebar {
+  border-right: 1px solid rgba(24, 50, 35, 0.12);
+  background: rgba(255, 251, 244, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.sidebar-header h1,
+.editor-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  margin: 0 0 0.35rem;
+  color: #64725f;
+}
+
+.muted,
+.meta {
+  color: #64725f;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin: 1.5rem 0 1rem;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 0.7rem 0.95rem;
+  background: #183223;
+  color: #f7f3eb;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+button.danger {
+  background: #8c3b2f;
+}
+
+.search {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.search input {
+  border: 1px solid rgba(24, 50, 35, 0.16);
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  padding: 0.8rem 0.9rem;
+}
+
+.tree-panel,
+.editor {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.tree-panel {
+  padding: 0.7rem;
+  min-height: 240px;
+}
+
+.editor {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 1rem;
+}
+
+.editor-header,
+.status,
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.status {
+  justify-content: flex-end;
+}
+
+.dirty {
+  font-weight: 600;
+  color: #8c3b2f;
+}
+
+textarea {
+  width: 100%;
+  min-height: 420px;
+  resize: vertical;
+  border: 1px solid rgba(24, 50, 35, 0.12);
+  border-radius: 20px;
+  padding: 1.1rem;
+  background: rgba(255, 252, 247, 0.92);
+}
+
+.error {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border-radius: 14px;
+  background: rgba(140, 59, 47, 0.12);
+  color: #8c3b2f;
+}
+
+.empty {
+  color: #64725f;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid rgba(24, 50, 35, 0.12);
+  }
+
+  .toolbar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .editor-header,
+  .status,
+  .meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,82 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div>
+        <p class="eyebrow">POC</p>
+        <h1>Knowledge Files</h1>
+      </div>
+      <p class="muted">SQLite-backed markdown snippets in a virtual folder tree.</p>
+    </div>
+
+    <div class="toolbar">
+      <button type="button" (click)="createFolder()">New folder</button>
+      <button type="button" (click)="createDocument()">New .md</button>
+      <button type="button" (click)="moveSelected()" [disabled]="!selectedNodeId()">
+        Move
+      </button>
+      <button type="button" (click)="renameSelected()" [disabled]="!selectedNodeId()">
+        Rename
+      </button>
+      <button type="button" class="danger" (click)="deleteSelected()" [disabled]="!selectedNodeId()">
+        Delete
+      </button>
+      <button type="button" (click)="logout()">Log out</button>
+    </div>
+
+    <label class="search">
+      <span>Search</span>
+      <input
+        type="search"
+        [(ngModel)]="vm.searchQuery"
+        (input)="runSearch()"
+        placeholder="Search titles or markdown text"
+      />
+    </label>
+
+    <div class="tree-panel">
+      <p *ngIf="treeStore.loading()" class="empty">Loading folders...</p>
+      <p *ngIf="treeStore.error()" class="empty">{{ treeStore.error() }}</p>
+      <p *ngIf="treeStore.isEmpty()" class="empty">No folders or notes yet.</p>
+      <app-tree-node
+        *ngFor="let node of treeStore.visibleTree()"
+        [node]="node"
+        [selectedId]="selectedNodeId()"
+        (select)="handleNodeSelection($event)"
+        (toggle)="toggleFolder($event.id)"
+      />
+    </div>
+  </aside>
+
+  <main class="editor">
+    <div class="editor-header">
+      <div>
+        <p class="eyebrow">Editor</p>
+        <h2>{{ selectedDocument()?.name || 'Select a markdown file' }}</h2>
+      </div>
+      <div class="status">
+        <span *ngIf="isDirty()" class="dirty">Unsaved changes</span>
+        <button
+          type="button"
+          (click)="saveDocument()"
+          [disabled]="!selectedDocument() || !isDirty() || vm.saving"
+        >
+          {{ vm.saving ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </div>
+
+    <p *ngIf="vm.error" class="error">{{ vm.error }}</p>
+
+    <textarea
+      [ngModel]="draftContent()"
+      (ngModelChange)="draftContent.set($event)"
+      [disabled]="!selectedDocument() || documentLoading()"
+      placeholder="Open or create a .md file to start writing."
+    ></textarea>
+
+    <div class="meta" *ngIf="selectedDocument() as doc">
+      <span>Updated {{ doc.updatedAt | date: 'medium' }}</span>
+      <span>{{ draftContent().length }} characters</span>
+    </div>
+  </main>
+</div>

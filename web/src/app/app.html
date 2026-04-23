@@ -1,0 +1,39 @@
+<div *ngIf="!authService.isAuthenticated()" class="login-shell">
+  <form class="login-card" (ngSubmit)="login()">
+    <div>
+      <p class="eyebrow">Access</p>
+      <h1>Knowledge Files</h1>
+      <p class="muted">Sign in to view the notes tree.</p>
+    </div>
+
+    <label class="search">
+      <span>Username</span>
+      <input
+        [ngModel]="loginUsername()"
+        (ngModelChange)="loginUsername.set($event)"
+        name="username"
+        type="text"
+        autocomplete="username"
+      />
+    </label>
+
+    <label class="search">
+      <span>Password</span>
+      <input
+        [ngModel]="loginPassword()"
+        (ngModelChange)="loginPassword.set($event)"
+        name="password"
+        type="password"
+        autocomplete="current-password"
+      />
+    </label>
+
+    <p *ngIf="loginError()" class="error">{{ loginError() }}</p>
+
+    <button type="submit" [disabled]="loginSubmitting()">
+      {{ loginSubmitting() ? 'Signing in...' : 'Sign in' }}
+    </button>
+  </form>
+</div>
+
+<router-outlet *ngIf="authService.isAuthenticated()" />
